@@ -39,13 +39,34 @@ void main(void) {
     INTCONbits.INTF   = 0;  // RB0/INT External Interrupt Flag bit (must be cleared in software)
     INTCONbits.RBIF   = 0;  // RB Port Change Interrupt Flag bit   (must be cleared in software)
     
+    ADCON1bits.PCFG0 = 0;
+    ADCON1bits.PCFG1 = 1;
+    ADCON1bits.PCFG2 = 1;
+    ADCON1bits.PCFG3 = 1;
+    
+    
+    ADCON0bits.ADCS0 = 0;
+    ADCON0bits.ADCS1 = 0;
+    
+    
+    ADCON1bits.ADFM = 0;
+    
+    ADRESL = 0x00;
+    ADRESH = 0X00;
+    
+    ADCON0bits.ADON = 1;
+            
     TRISB = 0xff; // IO port b
     TRISD = 0x00; // IO port D
     
     
+    
+    
     while(1){
        
-        
+        ADCON0bits.GO = 1;
+        __delay_us(100);
+        PORTD = ADRESH;
                         
     }
     
