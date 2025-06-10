@@ -20,6 +20,9 @@
 #pragma config WRT = OFF        // Flash Program Memory Write Enable bits (Write protection off; all program memory may be written to by EECON control)
 #pragma config CP = OFF         // Flash Program Memory Code Protection bit
 
+
+long value = 0;
+
 void main(void) {
     OPTION_REGbits.nRBPU    = 0; //portb PullUp
     OPTION_REGbits.INTEDG   = 1; //interrupt on port0 rising edge 0 -> 1
@@ -55,7 +58,7 @@ void main(void) {
     ADRESH = 0X00;
     
     ADCON0bits.ADON = 1;
-            
+    TRISA = 0xff;
     TRISB = 0xff; // IO port b
     TRISD = 0x00; // IO port D
     
@@ -65,9 +68,9 @@ void main(void) {
     while(1){
        
         ADCON0bits.GO = 1;
-        __delay_us(100);
-        PORTD = ADRESH;
-                        
+        __delay_us(10);
+        value = ADRESH;
+        PORTD = value*2;                
     }
     
     return;
